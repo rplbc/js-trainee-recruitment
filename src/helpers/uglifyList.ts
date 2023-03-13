@@ -1,8 +1,21 @@
-export default function uglifyList<T extends Record<string, any>>(
-  a: T[],
-  b: KeysMatching<T, string>
+export function uglify(str: string) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export default function addUglyId<T extends Record<string, any>>(
+  list: T[],
+  key: KeysMatching<T, string>,
+  prefix: string = ""
 ) {
-  return a.map((item) => ({ ...item, uglyId: item[b] }));
+  return list.map((item) => ({
+    ...item,
+    uglyId: `${prefix}${uglify(item[key])}`,
+  }));
 }
 
 export type KeysMatching<T, V> = {

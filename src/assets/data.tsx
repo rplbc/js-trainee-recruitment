@@ -1,4 +1,5 @@
 import Highlight from "@/components/highlight";
+import addUglyId from "@/helpers/uglifyList";
 import type { StaticImageData } from "next/image";
 
 import butterflyImg from "./butterfly.png";
@@ -15,7 +16,7 @@ export type TListItem = {
   img: StaticImageData;
 };
 
-const data: TListItem[] = [
+export const data: TListItem[] = [
   {
     title: "Polar bear",
     heading: (
@@ -81,4 +82,4 @@ const data: TListItem[] = [
   },
 ];
 
-export default data;
+export default addUglyId(data, "title", "article-");
