@@ -1,0 +1,9 @@
+.sidebar {
+  background-color: var(--color-white);
+  border-radius: 2px;
+}
+
+.sticky {
+  position: sticky;
+  top: var(--sticky-top, 0);
+}

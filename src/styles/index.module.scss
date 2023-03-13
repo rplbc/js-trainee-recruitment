@@ -1,9 +1,102 @@
-.wrapper {
-    margin: 15% auto;
-    max-width: 720px;
-    text-align: center;
+@import "./functions";
+
+.inner {
+  width: 100%;
+  max-width: 1240px;
+  margin: px-to-rem(48) auto px-to-em(96);
+
+  @media (max-width: 1280px) {
+    max-width: initial;
+    padding: 0 20px;
+  }
 }
 
-.wrapper h1 {
-    font-weight: 500;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gutter);
+
+  @media (max-width: 1024px) {
+    --gutter: 16px;
+  }
+}
+
+.sidebar {
+  align-self: start;
+  grid-column: span 3;
+  height: min(500px, 100vh);
+  overflow: auto;
+
+  @media (min-width: 1025px) {
+    width: calc(100% + var(--gutter));
+    --sticky-top: #{px-to-rem(6)};
+  }
+
+  @media (max-width: 1024px) {
+    height: auto;
+  }
+
+  &__heading {
+    font-size: px-to-rem(18);
+    padding: px-to-em(24, 18) px-to-em(24, 18) px-to-em(16, 18);
+  }
+}
+
+.nav {
+  position: relative;
+  --gradient-tip-width: #{px-to-rem(120)};
+
+  @media (min-width: 1025px) {
+    padding-bottom: 2rem;
+  }
+
+  @media (max-width: 1024px) {
+    &::after {
+      content: "";
+      pointer-events: none;
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      width: var(--gradient-tip-width);
+      height: 100%;
+      background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        #fff calc(100% - 1rem)
+      );
+    }
+  }
+}
+
+.nav__links {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
+  @media (max-width: 1024px) {
+    flex-flow: row nowrap;
+    padding-right: var(--gradient-tip-width);
+  }
+
+  a {
+    text-transform: capitalize;
+  }
+}
+
+.main {
+  grid-column: span 8 / -1;
+}
+
+.sidebar,
+.main {
+  @media (max-width: 1024px) {
+    grid-column: 1 / -1;
+  }
+}
+
+.article {
+  & + & {
+    margin-top: px-to-rem(64);
+  }
 }
