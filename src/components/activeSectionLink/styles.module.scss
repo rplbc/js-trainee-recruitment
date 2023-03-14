@@ -1,14 +1,17 @@
 @import "@/styles/functions";
 
 .default {
-  font-size: px-to-rem(14);
+  $em: 14;
+  font-size: px-to-rem($em);
   font-weight: 500;
-  padding: px-to-em(14, 14) px-to-em(48, 14);
+  padding: px-to-em(14, $em) px-to-em(48, $em);
   color: var(--color-gray-500);
   transition-property: color, background;
   transition-duration: 300ms;
   transition-timing-function: ease;
   white-space: nowrap;
+  text-transform: capitalize;
+  display: block;
 
   &:hover {
     background-color: var(--color-gray-50);
@@ -17,9 +20,9 @@
   @media (max-width: 1024px) {
     padding: 1em;
   }
-}
 
-.active {
-  background-color: var(--color-gray-50);
-  color: var(--color-orange-500);
+  &[aria-current] {
+    background-color: var(--color-gray-50);
+    color: var(--color-orange-500);
+  }
 }
