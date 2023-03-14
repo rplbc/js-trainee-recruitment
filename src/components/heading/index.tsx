@@ -1,7 +1,7 @@
 import joinClassNames from "@/helpers/joinClassNames";
 import styles from "./styles.module.scss";
 
-export default function Highlight({
+export default function Heading({
   as = "h3",
   className,
   variant = "default",
