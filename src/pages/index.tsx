@@ -103,7 +103,7 @@ export default function Home({
 
       <main className={styles.main}>
         {data.map((item) => (
-          <Card key={item.title} {...item} />
+          <Card key={item.title} {...item} className={styles.article} />
         ))}
       </main>
     </Layout>
