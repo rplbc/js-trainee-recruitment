@@ -1,8 +1,9 @@
 import joinClassNames from "@/helpers/joinClassNames";
 import Link, { type LinkProps } from "next/link";
+import { memo } from "react";
 import styles from "./styles.module.scss";
 
-export default function ActiveSectionLink({
+export function ActiveSectionLink({
   isActive,
   className,
   ...props
@@ -15,6 +16,8 @@ export default function ActiveSectionLink({
     />
   );
 }
+
+export default memo(ActiveSectionLink);
 
 export type ActiveSectionLinkProps = {
   isActive?: boolean;

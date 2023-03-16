@@ -7,7 +7,7 @@ import styles from "@/styles/index.module.scss";
 import type { InferGetStaticPropsType } from "next";
 import { Inter } from "next/font/google";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const inter = Inter({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
@@ -28,6 +28,7 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
   const [currentId, setCurrentId] = useState<string | null>(null);
+  const refs = useRef<Map<string, Element | null>>(new Map());
 
   useEffect(() => {
     function onHashChange(hash: string) {
@@ -43,30 +44,20 @@ export default function Home({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const observedElements = useCallback(
-    function () {
-      return uglyIds
-        .map((id) => document.querySelector(`#${id}`))
-        .filter((elem) => elem !== null);
-    },
-    [uglyIds]
-  );
-
   useEffect(() => {
-    const elements = observedElements();
-    const elementsVisibility = new Map<Element, boolean>();
+    const elemsVisibility = new Map<Element, boolean>();
 
     const observer = new IntersectionObserver(
       function (entries) {
         entries.forEach((entry) => {
-          elementsVisibility.set(entry.target, entry.isIntersecting);
+          elemsVisibility.set(entry.target, entry.isIntersecting);
         });
 
-        const ids = Array.from(elementsVisibility.entries())
-          .filter(([_, isIntersecting]) => isIntersecting)
+        const ids = Array.from(elemsVisibility.entries())
+          .filter(([, isIntersecting]) => isIntersecting)
           .map(([{ id }]) => id);
 
-        setCurrentId(ids[0]);
+        setCurrentId(ids[0] || null);
       },
       {
         rootMargin: "0px",
@@ -74,15 +65,15 @@ export default function Home({
       }
     );
 
-    elements.forEach((elem) => {
+    Array.from(refs.current).forEach(([, elem]) => {
       if (!elem) return;
 
-      elementsVisibility.set(elem, false);
+      elemsVisibility.set(elem, false);
       observer.observe(elem);
     });
 
     return () => observer.disconnect();
-  }, [observedElements]);
+  }, []);
 
   return (
     <Layout className={`${inter.className}`}>
@@ -90,7 +81,7 @@ export default function Home({
         <nav className={styles.nav}>
           {data.map((item) => (
             <ActiveSectionLink
-              key={item.title}
+              key={item.uglyId}
               href={`#${item.uglyId}`}
               className={styles.nav__link}
               isActive={currentId === item.uglyId}
@@ -103,7 +94,14 @@ export default function Home({
 
       <main className={styles.main}>
         {data.map((item) => (
-          <Card key={item.title} {...item} className={styles.article} />
+          <Card
+            key={item.uglyId}
+            ref={(el) => {
+              refs.current.set(item.title, el);
+            }}
+            className={styles.article}
+            {...item}
+          />
         ))}
       </main>
     </Layout>

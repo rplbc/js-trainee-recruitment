@@ -1,16 +1,14 @@
 import { TDataItem } from "@/assets/data";
 import Heading from "@/components/heading";
 import Image from "next/image";
+import { forwardRef } from "react";
 
-export default function Card({
-  uglyId,
-  title,
-  heading,
-  img,
-  ...props
-}: CardProps) {
+export default forwardRef<HTMLElement, CardProps>(function Card(
+  { uglyId, title, heading, img, ...props },
+  ref
+) {
   return (
-    <article id={uglyId} {...props}>
+    <article ref={ref} id={uglyId} {...props}>
       <Heading as="h2" variant="sub">
         {title}
       </Heading>
@@ -21,7 +19,7 @@ export default function Card({
       <Image src={img} alt={title} />
     </article>
   );
-}
+});
 
 type CardOwnProps = TDataItem;
 
