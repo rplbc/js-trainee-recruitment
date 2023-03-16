@@ -4,6 +4,7 @@ import Heading from "@/components/heading";
 import Layout from "@/components/layout";
 import Sidebar from "@/components/sidebar";
 import styles from "@/styles/index.module.scss";
+import type { InferGetStaticPropsType } from "next";
 import { Inter } from "next/font/google";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -11,10 +12,23 @@ import { useCallback, useEffect, useState } from "react";
 
 const inter = Inter({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
-export default function Home() {
+export const getStaticProps = async () => {
+  const uglyIds = data.map(({ uglyId }) => uglyId);
+
+  return {
+    props: {
+      uglyIds,
+      data,
+    },
+  };
+};
+
+export default function Home({
+  uglyIds,
+  data,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
   const [currentId, setCurrentId] = useState<string | null>(null);
-  const uglyIds = data.map(({ uglyId }) => uglyId);
 
   useEffect(() => {
     function onHashChange(hash: string) {
@@ -98,7 +112,10 @@ export default function Home() {
             <Heading as="h2" variant="sub">
               {item.title}
             </Heading>
-            <Heading variant="primary">{item.heading}</Heading>
+            <Heading
+              variant="primary"
+              dangerouslySetInnerHTML={{ __html: item.heading }}
+            />
             <Image src={item.img} alt={item.title} />
           </article>
         ))}

@@ -1,14 +1,12 @@
-import joinClassNames from "@/helpers/joinClassNames";
-import styles from "./styles.module.scss";
-
 export default function Highlight({
   color = "orange",
-  className,
   ...props
 }: HighlightProps) {
-  return (
-    <span className={joinClassNames(styles[color], className)} {...props} />
-  );
+  const colors = {
+    orange: "var(--color-orange-500)",
+  };
+
+  return <span style={{ color: colors[color] }} {...props} />;
 }
 
 export type HighlightProps = {

@@ -1,6 +1,7 @@
 import Highlight from "@/components/highlight";
 import addUglyId from "@/helpers/uglifyList";
 import type { StaticImageData } from "next/image";
+import { renderToStaticMarkup } from "react-dom/server";
 
 import butterflyImg from "./butterfly.png";
 import cheetahImg from "./cheetah.png";
@@ -12,14 +13,14 @@ import squirrelImg from "./squirrel.png";
 
 export type TListItem = {
   title: string;
-  heading: string | JSX.Element;
+  heading: string;
   img: StaticImageData;
 };
 
 export const data: TListItem[] = [
   {
     title: "Polar bear",
-    heading: (
+    heading: renderToStaticMarkup(
       <>
         Say hello to your new <Highlight>friend</Highlight>
       </>
@@ -28,7 +29,7 @@ export const data: TListItem[] = [
   },
   {
     title: "Cheetah",
-    heading: (
+    heading: renderToStaticMarkup(
       <>
         No petting before <Highlight>eating</Highlight>
       </>
@@ -37,7 +38,7 @@ export const data: TListItem[] = [
   },
   {
     title: "Panda",
-    heading: (
+    heading: renderToStaticMarkup(
       <>
         Eating always with <Highlight>pleasure</Highlight>
       </>
@@ -46,7 +47,7 @@ export const data: TListItem[] = [
   },
   {
     title: "Fox",
-    heading: (
+    heading: renderToStaticMarkup(
       <>
         Sometimes quite <Highlight>suspicious</Highlight>
       </>
@@ -55,7 +56,7 @@ export const data: TListItem[] = [
   },
   {
     title: "Squirrel",
-    heading: (
+    heading: renderToStaticMarkup(
       <>
         Staying <Highlight>curious</Highlight>
       </>
@@ -64,7 +65,7 @@ export const data: TListItem[] = [
   },
   {
     title: "Butterfly",
-    heading: (
+    heading: renderToStaticMarkup(
       <>
         <Highlight>Majestic</Highlight> every time of a day
       </>
@@ -73,7 +74,7 @@ export const data: TListItem[] = [
   },
   {
     title: "Elephant",
-    heading: (
+    heading: renderToStaticMarkup(
       <>
         It makes a <Highlight>huge</Highlight> difference
       </>
