@@ -83,4 +83,7 @@ export const data: TListItem[] = [
   },
 ];
 
+export type TDataList = ReturnType<typeof addUglyId<TListItem>>;
+export type TDataItem = TDataList[number];
+
 export default addUglyId(data, "title", "article-");

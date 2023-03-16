@@ -1,12 +1,11 @@
 import data from "@/assets/data";
 import ActiveSectionLink from "@/components/activeSectionLink";
-import Heading from "@/components/heading";
+import Card from "@/components/card";
 import Layout from "@/components/layout";
 import Sidebar from "@/components/sidebar";
 import styles from "@/styles/index.module.scss";
 import type { InferGetStaticPropsType } from "next";
 import { Inter } from "next/font/google";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 
@@ -104,20 +103,7 @@ export default function Home({
 
       <main className={styles.main}>
         {data.map((item) => (
-          <article
-            key={item.uglyId}
-            id={item.uglyId}
-            className={styles.article}
-          >
-            <Heading as="h2" variant="sub">
-              {item.title}
-            </Heading>
-            <Heading
-              variant="primary"
-              dangerouslySetInnerHTML={{ __html: item.heading }}
-            />
-            <Image src={item.img} alt={item.title} />
-          </article>
+          <Card key={item.title} {...item} />
         ))}
       </main>
     </Layout>
