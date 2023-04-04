@@ -1,0 +1,32 @@
+@import "./functions";
+
+.sidebar {
+  --sticky-top: #{px-to-rem(6)};
+  align-self: start;
+  grid-column: span 3;
+  width: calc(100% + var(--gutter));
+  height: min(500px, calc(100vh - 2 * var(--sticky-top)));
+  overflow: auto;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+
+.nav {
+  padding-bottom: 2rem;
+}
+
+.main {
+  grid-column: span 8 / -1;
+
+  @media (max-width: 1024px) {
+    grid-column: 1 / -1;
+  }
+}
+
+.article {
+  & + & {
+    margin-top: px-to-rem(64);
+  }
+}

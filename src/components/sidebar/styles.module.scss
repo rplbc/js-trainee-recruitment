@@ -1,0 +1,17 @@
+@import "@/styles/functions";
+
+.sidebar {
+  background-color: var(--color-white);
+  border-radius: 2px;
+
+  &__heading {
+    $em: 18;
+    font-size: px-to-rem($em);
+    padding: px-to-em(24, $em) px-to-em(24, $em) px-to-em(16, $em);
+  }
+}
+
+.sticky {
+  position: sticky;
+  top: var(--sticky-top, 0px);
+}
